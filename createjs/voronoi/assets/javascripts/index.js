@@ -95,7 +95,7 @@
 
             app.diagram.removeAllChildren();
 
-            var diagram = app.voronoi.compute(app.sites, app.bbox);
+            var diagram = app.voronoi.compute(app.sites.map(function(site) { return { x : site.x * app.stage.canvas.width , y : site.y * app.stage.canvas.height } }), app.bbox);
             for (var i = 0, n = app.sites.length; i < n; i++) {
 
                 var cell = diagram.cells[i];
@@ -103,8 +103,7 @@
                 if(!cell || cell.halfedges.length <= 0) continue;
 
                 var points = cell.halfedges.map(function(he) {
-                    var v = he.getEndpoint();
-                    return new createjs.Point(v.x * app.stage.canvas.width, v.y * app.stage.canvas.height);
+                    return he.getEndpoint();
                 });
 
                 var polygon = new createjs.Shape();
@@ -122,8 +121,8 @@
 
                 var point = new createjs.Shape();
                 point.graphics.beginStroke('#000').drawCircle(0, 0, 5);
-                point.x = cell.site.x * app.stage.canvas.width;
-                point.y = cell.site.y * app.stage.canvas.height;
+                point.x = cell.site.x;
+                point.y = cell.site.y;
                 app.diagram.addChild(point);
             }
 
