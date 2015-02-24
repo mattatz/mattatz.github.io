@@ -14,6 +14,8 @@
         init : function(id) {
 
             app.stage = new createjs.Stage(id);
+            createjs.Touch.enable(app.stage);
+
             app.voronoi =  new Voronoi();
 
             app.sites = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(function(e) {
@@ -120,7 +122,7 @@
                 app.diagram.addChild(polygon);
 
                 var point = new createjs.Shape();
-                point.graphics.beginStroke('#000').drawCircle(0, 0, 5);
+                point.graphics.beginFill('#000').drawCircle(0, 0, 3);
                 point.x = cell.site.x;
                 point.y = cell.site.y;
                 app.diagram.addChild(point);
