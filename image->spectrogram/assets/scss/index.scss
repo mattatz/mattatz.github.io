@@ -68,7 +68,7 @@
 }
 
 * {
-    font-family: "Helvetica";
+    font-family: Helvetica, Arial;
     color: #222;
     padding: 0;
     margin: 0;
@@ -183,12 +183,16 @@ header {
 
     background-color: rgba(0, 5, 15, 1.0);
     width: 100%;
-    height:calc(100% - 135px);
+
+    // http://stackoverflow.com/questions/23958413/getting-percentages-to-work-in-css-calc-for-firefox-and-safari
+    height: -webkit-calc(100vh - 135px);
+    height: -moz-calc(100vh - 135px);
+    height: calc(100vh - 135px);
 
     & > div, svg {
         position: absolute;
         margin: auto;
-        top: 120px;
+        top: 0px;
         left: 0;
         bottom: 0;
         right: 0;

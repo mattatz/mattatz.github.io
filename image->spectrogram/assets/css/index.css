@@ -44,7 +44,7 @@
   100% {
     opacity: 1.0; } }
 * {
-  font-family: "Helvetica";
+  font-family: Helvetica, Arial;
   color: #222;
   padding: 0;
   margin: 0; }
@@ -117,11 +117,13 @@ header {
 #viewer {
   background-color: #00050f;
   width: 100%;
-  height: calc(100% - 135px); }
+  height: -webkit-calc(100vh - 135px);
+  height: -moz-calc(100vh - 135px);
+  height: calc(100vh - 135px); }
   #viewer > div, #viewer svg {
     position: absolute;
     margin: auto;
-    top: 120px;
+    top: 0px;
     left: 0;
     bottom: 0;
     right: 0; }
