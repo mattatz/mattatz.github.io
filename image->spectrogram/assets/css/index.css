@@ -1,0 +1,158 @@
+/*
+ * index.scss 
+ */
+@-webkit-keyframes ddAnimation {
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); }
+  100% {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05); } }
+@-moz-keyframes ddAnimation {
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); }
+  100% {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05); } }
+@keyframes ddAnimation {
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); }
+  100% {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05); } }
+@-webkit-keyframes pgShowAnimation {
+  0% {
+    opacity: 0.0; }
+  100% {
+    opacity: 1.0; } }
+@-moz-keyframes pgShowAnimation {
+  0% {
+    opacity: 0.0; }
+  100% {
+    opacity: 1.0; } }
+@keyframes pgShowAnimation {
+  0% {
+    opacity: 0.0; }
+  100% {
+    opacity: 1.0; } }
+* {
+  font-family: "Helvetica";
+  color: #222;
+  padding: 0;
+  margin: 0; }
+
+html, body, div, canvas {
+  margin: 0px;
+  padding: 0px; }
+
+a {
+  text-decoration: underline; }
+  a:hover {
+    text-decoration: none; }
+
+.logo {
+  font-family: 'Open Sans Condensed', sans-serif;
+  letter-spacing: 1px; }
+
+header, #ui {
+  height: 30px;
+  padding: 4px 12px; }
+  header > div, #ui > div {
+    line-height: 30px;
+    display: inline;
+    margin-left: 15px; }
+    header > div:first-child, #ui > div:first-child {
+      margin-left: 0px; }
+
+header {
+  padding-top: 12px; }
+  header .title h1 {
+    font-size: 20px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    display: inline;
+    font-family: 'Open Sans Condensed', sans-serif; }
+    header .title h1 span {
+      font-weight: lighter;
+      font-size: 13px;
+      vertical-align: middle; }
+  header .author {
+    float: right;
+    font-size: 12px; }
+
+#description {
+  padding: 4px 12px;
+  font-size: 14px; }
+
+#ui {
+  padding-bottom: 12px; }
+  #ui #samples img {
+    cursor: pointer;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(10, 10, 10, 0.8); }
+    #ui #samples img:hover {
+      border: 1px solid rgba(10, 10, 10, 0.2); }
+  #ui #download a {
+    background-image: url("../images/arrow.png");
+    background-repeat: no-repeat;
+    background-position: 0px 2px;
+    background-size: 11px 14px;
+    padding-left: 14px;
+    font-size: 14px; }
+    #ui #download a img {
+      vertical-align: middle;
+      height: 20px; }
+
+#viewer {
+  background-color: #00050f;
+  width: 100%;
+  height: calc(100% - 135px); }
+  #viewer > div, #viewer svg {
+    position: absolute;
+    margin: auto;
+    top: 120px;
+    left: 0;
+    bottom: 0;
+    right: 0; }
+  #viewer > div {
+    pointer-events: none;
+    background-color: rgba(250, 250, 250, 0.1);
+    text-align: center;
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    -webkit-animation: ddAnimation 0.4s ease infinite alternate;
+    -moz-animation: ddAnimation 0.4s ease infinite alternate;
+    animation: ddAnimation 0.4s ease infinite alternate;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+    #viewer > div p {
+      display: table-cell;
+      vertical-align: middle;
+      width: 250px;
+      height: 250px;
+      font-weight: lighter;
+      font-size: 16px;
+      color: white; }
+      #viewer > div p span {
+        font-size: 14px;
+        color: white; }
+  #viewer svg {
+    display: block;
+    width: 20%; }
+  #viewer canvas {
+    margin: auto; }
+
+/*# sourceMappingURL=index.css.map */

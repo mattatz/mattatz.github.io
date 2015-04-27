@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>image -> spectrogram</title>
+
+    <script type="text/javascript" src="./assets/javascripts/lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/lib/chroma.min.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/lib/dropzone.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/lib/progressbar.min.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/lib/recorder.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/lib/recorderWorker.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/spectrogram.js"></script>
+    <script type="text/javascript" src="./assets/javascripts/index.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./assets/css/lib/normalize.css" media="all">
+    <link rel="stylesheet" type="text/css" href="./assets/css/index.css" media="all">
+  </head>
+  <body>
+    <header>
+        <div class="title">
+            <h1>image <span>-></span> spectrogram</h1>
+        </div>
+           <div class="author">
+            by <a href="https://twitter.com/mattatz" target="_blank">@mattatz</a>
+        </div>
+    </header>
+    <div id="description">
+        <p>
+            <span class="logo">image -> spectrogram</span> will convert a given image into a sound.</br />
+            This project refers to <a href="http://www.devrand.org/2013/04/image-to-spectrogram.html" target="_blank">the another project</a> for the core algorithm.
+        </p>
+    </div>
+    <div id="ui">
+        <div id="samples">
+            <img src="./assets/images/sample1.png" onclick="return false;" alt="sample1" title="load a sample image" />
+            <img src="./assets/images/sample2.jpg" onclick="return false;" alt="sample2" title="load a sample image" />
+            <img src="./assets/images/sample3.png" onclick="return false;" alt="sample3" title="load a sample image" />
+            <img src="./assets/images/sample4.jpg" onclick="return false;" alt="sample4" title="load a sample image" />
+            <img src="./assets/images/sample5.jpg" onclick="return false;" alt="sample5" title="load a sample image" />
+        </div>
+        <div id="download">
+            <a href="" onclick="return false;">download</a>
+        </div>
+    </div>
+    <div id="viewer" class="">
+        <div class="dragover">
+            <p>Drag n Drop a File <br /> <span class="optional">(image or audio)</span></p>
+        </div>
+    </div>
+  </body>
+</html>
