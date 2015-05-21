@@ -44,19 +44,20 @@
                     composer.render();
                     composer.removePass(initPass);
                     composer.pingpong();
-                });
-                app.getShader("gol.frag", function(golFrag) {
-                    var pass = new THREE.ShaderPass({
-                        uniforms : {
-                            "tDiffuse": { type : "t", value : null },
-                            "threshold" : { type : "f", value : 0.5 },
-                            "dx": { type : "f", value : (1 / size) },
-                            "dy": { type : "f", value : (1 / size) }
-                        },
-                        vertexShader : vert,
-                        fragmentShader : golFrag
-                    }, "tDiffuse");
-                    composer.addPass(pass);
+
+                    app.getShader("gol.frag", function(golFrag) {
+                        var pass = new THREE.ShaderPass({
+                            uniforms : {
+                                "tDiffuse": { type : "t", value : null },
+                                "threshold" : { type : "f", value : 0.5 },
+                                "dx": { type : "f", value : (1 / size) },
+                                "dy": { type : "f", value : (1 / size) }
+                            },
+                            vertexShader : vert,
+                            fragmentShader : golFrag
+                        }, "tDiffuse");
+                        composer.addPass(pass);
+                    });
                 });
             });
 
