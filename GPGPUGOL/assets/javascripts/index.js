@@ -49,6 +49,7 @@
                     var pass = new THREE.ShaderPass({
                         uniforms : {
                             "tDiffuse": { type : "t", value : null },
+                            "threshold" : { type : "f", value : 0.5 },
                             "dx": { type : "f", value : (1 / size) },
                             "dy": { type : "f", value : (1 / size) }
                         },
