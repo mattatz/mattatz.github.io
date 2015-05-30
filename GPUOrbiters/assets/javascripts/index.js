@@ -198,6 +198,9 @@
                 );
                 scene.add(ps);
 
+                // init
+                simulate(0.0, 0.0, new THREE.Vector3(0, 0, 0));
+
             });
 
             var clock = new THREE.Clock();
@@ -224,45 +227,44 @@
                 force.uniforms.inverse.value = 0;
             });
 
+            var simulate = function(t, dt, attractor) {
+                // apply force
+                
+                force.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
+                force.uniforms.positionTex.value = fboPositionPP.getReadBuffer();
+                force.uniforms.time.value = t;
+                force.uniforms.attractor.value = attractor;
+                force.uniforms.dt.value = dt;
+                blit(force, fboAccelerationPP.getWriteBuffer());
+                fboAccelerationPP.swap();
+
+                // update velocity
+                acceleration.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
+                acceleration.uniforms.velocityTex.value = fboVelocityPP.getReadBuffer();
+                acceleration.uniforms.time.value = t;
+                acceleration.uniforms.dt.value = dt;
+                blit(acceleration, fboVelocityPP.getWriteBuffer());
+                fboVelocityPP.swap();
+
+                // update position
+                velocity.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
+                velocity.uniforms.velocityTex.value = fboVelocityPP.getReadBuffer();
+                velocity.uniforms.positionTex.value = fboPositionPP.getReadBuffer();
+                velocity.uniforms.time.value = t;
+                velocity.uniforms.dt.value = dt;
+                blit(velocity, fboPositionPP.getWriteBuffer());
+                fboPositionPP.swap();
+            };
+
             (function loop() {
                 requestAnimationFrame(loop);
 
                 var t = clock.elapsedTime * 0.25;
-                // sphere.position.set(Math.cos(t) * space.x, Math.sin(t) * space.y, Math.sin(t) * space.z);
                 sphere.position.set(Math.cos(t) * mspace.x, Math.sin(t) * mspace.y, Math.sin(t) * mspace.z);
 
                 if(ps) {
-
-                    // apply force
-                    
-                    force.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
-                    force.uniforms.positionTex.value = fboPositionPP.getReadBuffer();
-                    force.uniforms.time.value = clock.elapsedTime;
-                    // force.uniforms.attractor.value = new THREE.Vector3(Math.cos(clock.elapsedTime) * 0.5 + 0.5, Math.sin(clock.elapsedTime) * 0.5 + 0.5, 0.);
-                    force.uniforms.attractor.value = new THREE.Vector3(sphere.position.x / space.x * 0.5 + 0.5, sphere.position.y / space.y * 0.5 + 0.5, sphere.position.z / space.z * 0.5 + 0.5);
-                    force.uniforms.dt.value = dt;
-                    blit(force, fboAccelerationPP.getWriteBuffer());
-                    fboAccelerationPP.swap();
-
-                    // update velocity
-                    acceleration.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
-                    acceleration.uniforms.velocityTex.value = fboVelocityPP.getReadBuffer();
-                    acceleration.uniforms.time.value = clock.elapsedTime;
-                    acceleration.uniforms.dt.value = dt;
-                    blit(acceleration, fboVelocityPP.getWriteBuffer());
-                    fboVelocityPP.swap();
-
-                    // update position
-                    velocity.uniforms.accelerationTex.value = fboAccelerationPP.getReadBuffer();
-                    velocity.uniforms.velocityTex.value = fboVelocityPP.getReadBuffer();
-                    velocity.uniforms.positionTex.value = fboPositionPP.getReadBuffer();
-                    velocity.uniforms.time.value = clock.elapsedTime;
-                    velocity.uniforms.dt.value = dt;
-                    blit(velocity, fboPositionPP.getWriteBuffer());
-                    fboPositionPP.swap();
-
+                    simulate(clock.elapsedTime, dt, new THREE.Vector3(sphere.position.x / space.x * 0.5 + 0.5, sphere.position.y / space.y * 0.5 + 0.5, sphere.position.z / space.z * 0.5 + 0.5));
                     ps.material.uniforms.positionTex.value = fboPositionPP.getReadBuffer();
-
                     blit(clear, fboAccelerationPP.getReadBuffer());
                 }
 
