@@ -186,8 +186,8 @@
 
                         advect.uniforms.mouse.value = new THREE.Vector2(x, y);
                         advect.uniforms.force.value = new THREE.Vector2(
-                            Math.max(Math.min((x - x0), 1), 0) * 300,
-                            Math.max(Math.min((y - y0), 1), 0) * 300
+                            (x - x0) * 300,
+                            (y - y0) * 300
                         );
 
                         x0 = x;
