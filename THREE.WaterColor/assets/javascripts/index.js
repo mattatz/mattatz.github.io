@@ -106,11 +106,10 @@ THREE.CelShading = {
             composer.addPass(new THREE.RenderPass(scene, camera));
 
             var paper = new THREE.ImageUtils.loadTexture("./assets/textures/paper.png");
-            var noise = new THREE.ImageUtils.loadTexture("./assets/textures/fractal.jpg");
 
-            var waterColorPass = new THREE.WaterColorPass(paper, noise);
-            waterColorPass.renderToScreen = true;
-			composer.addPass( waterColorPass );
+            var watercolorPass = new THREE.WatercolorPass(paper);
+            watercolorPass.renderToScreen = true;
+			composer.addPass( watercolorPass );
 
             var effectController = {
                 scale: 		0.03,
@@ -120,10 +119,10 @@ THREE.CelShading = {
             };
 
             var matChanger = function() {
-                waterColorPass.uniforms[ "scale" ].value = effectController.scale;
-				waterColorPass.uniforms[ "threshold" ].value = effectController.threshold;
-				waterColorPass.uniforms[ "darkening" ].value = effectController.darkening;
-				waterColorPass.uniforms[ "pigment" ].value = effectController.pigment;
+                watercolorPass.uniforms[ "scale" ].value = effectController.scale;
+				watercolorPass.uniforms[ "threshold" ].value = effectController.threshold;
+				watercolorPass.uniforms[ "darkening" ].value = effectController.darkening;
+				watercolorPass.uniforms[ "pigment" ].value = effectController.pigment;
             };
 
             var gui = new dat.GUI();

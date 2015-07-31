@@ -7,7 +7,7 @@
  * Su et al. Real-Time rendering of watercolor effects for virtual environments. / http://dl.acm.org/citation.cfm?id=2131253
  */
 
-THREE.WaterColor = {
+THREE.Watercolor = {
 
     uniforms: {
         "tDiffuse":		{ type: "t", value: null }, // diffuse texture

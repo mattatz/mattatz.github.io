@@ -2,10 +2,10 @@
  * @author mattatz / http://mattatz.github.io
  */
 
-THREE.WaterColorPass = function ( tPaper ) {
-    if ( THREE.WaterColor === undefined ) console.error( "THREE.WaterColorPass relies on THREE.WaterColor" );
+THREE.WatercolorPass = function ( tPaper ) {
+    if ( THREE.Watercolor === undefined ) console.error( "THREE.WatercolorPass relies on THREE.Watercolor" );
 
-    var shader = THREE.WaterColor;
+    var shader = THREE.Watercolor;
     this.uniforms = THREE.UniformsUtils.clone( shader.uniforms );
 
     tPaper.wrapS = tPaper.wrapT = THREE.RepeatWrapping;
@@ -28,7 +28,7 @@ THREE.WaterColorPass = function ( tPaper ) {
     this.scene.add( this.quad );
 };
 
-THREE.WaterColorPass.prototype = {
+THREE.WatercolorPass.prototype = {
 
     render: function ( renderer, writeBuffer, readBuffer, delta ) 
     {
