@@ -1,0 +1,15 @@
+body {
+  background-color: #f0f0f0; }
+
+#screen video {
+  border: 1px solid #000000; }
+#screen #remote-video {
+  width: 300px; }
+#screen #local-video {
+  width: 100px; }
+
+#controller {
+  width: 400px;
+  height: 180px; }
+
+/*# sourceMappingURL=index.css.map */
