@@ -1,0 +1,29 @@
+/*
+ * index.scss 
+ */
+html, body, * {
+  margin: 0;
+  padding: 0; 
+}
+
+#viewer {
+  position: absolute;
+  left: 0px;
+  top: 0px; 
+}
+
+.chromebadge {
+  cursor: auto;
+  z-index: 100;
+  position: absolute;
+  margin: auto;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  height: auto;
+  max-width: 160px;
+  max-height: 92px;
+  z-index: 100;
+}
+
+/*# sourceMappingURL=index.css.map */
