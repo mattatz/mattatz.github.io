@@ -1,0 +1,17 @@
+/*
+ * index.css 
+ */
+
+html, body {
+  margin: 0;
+  padding: 0; 
+}
+
+h2 {
+    margin: 8px 12px;
+}
+
+ul {
+    margin: 4px 16px;
+}
+
