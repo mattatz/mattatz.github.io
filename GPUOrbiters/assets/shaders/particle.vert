@@ -21,7 +21,7 @@ void main() {
     vec3 p = texture2D(positionTex, texcoord).xyz;
     vec3 pos = uncomp(p);
 
-    color = vec4(p, 1.);
+    color = vec4(p, 1.0);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     gl_PointSize = pointSize;

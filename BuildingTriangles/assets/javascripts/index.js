@@ -57,14 +57,19 @@
             var container = new THREE.Object3D();
             scene.add(container);
 
-            var geometry = (new THREE.SphereGeometry(5, 32, 32)).disperse();
+            var origin = new THREE.SphereGeometry(5, 32, 32).disperse();
+            var geometry = (new THREE.BufferGeometry()).fromGeometry(origin);
 
-            var seeds = [];
-
-            for(var i = 0, n = geometry.faces.length; i < n; i++) {
+            var vertexCount = geometry.attributes.position.count;
+            var seeds = new Float32Array(vertexCount);
+            for(var i = 0, n = vertexCount; i < n; i += 3) {
                 var r = Math.random();
-                seeds.push(r, r, r);
+                seeds[i + 0] = r;
+	            seeds[i + 1] = r;
+                seeds[i + 2] = r;
             }
+
+            geometry.addAttribute('seed', new THREE.BufferAttribute(seeds, 1));
 
             var invMatrix = new THREE.Matrix4();
             app.getShader("triangles.vert", function(vert) {
@@ -80,9 +85,6 @@
                                 radius              : { type : "f", value : 10.0 },
                                 invMatrix           : { type : "m4", value : invMatrix }
                             },
-                            attributes : {
-                                seed               : { type : "f", value : seeds },
-                            },
                             vertexShader : vert,
                             fragmentShader : frag,
                             transparent : true
@@ -95,7 +97,7 @@
             app.getShader("wireframe.vert", function(vert) {
                 app.getShader("wireframe.frag", function(frag) {
                     wireframe = new THREE.Mesh(
-                        geometry,
+                        origin,
                         new THREE.ShaderMaterial({ 
                             vertexShader : vert,
                             fragmentShader : frag,

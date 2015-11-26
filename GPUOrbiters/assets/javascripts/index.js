@@ -193,7 +193,10 @@
                             "vuv" : { type : "v2", value : uv }
                         },
                         vertexShader : shaders[0],
-                        fragmentShader : shaders[1] 
+                        fragmentShader : shaders[1],
+                        blending : THREE.AdditiveBlending,
+                        transparent : true,
+                        depthTest : false
                     })
                 );
                 scene.add(ps);
