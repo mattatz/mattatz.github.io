@@ -82,7 +82,7 @@
                 }
 
                 renderer.render(scene, camera);
-                plane.rotation.set(clock.elapsedTime * 0.1, clock.elapsedTime * 0.1, 0);
+                // plane.rotation.set(clock.elapsedTime * 0.1, clock.elapsedTime * 0.1, 0);
 
                 var delta = clock.getDelta();
                 trackballControls.update(delta);

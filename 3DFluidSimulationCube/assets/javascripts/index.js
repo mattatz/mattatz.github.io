@@ -8,8 +8,8 @@
         return new THREE.WebGLRenderTarget(width, height, {
             wrapS: THREE.ClampToEdgeWrapping,
             wrapT: THREE.ClampToEdgeWrapping,
-            minFilter: THREE.NearestFilter,
-            magFilter: THREE.NearestFilter,
+            minFilter: THREE.LinearFilter,
+            magFilter: THREE.LinearFilter,
             format: format || THREE.RGBAFormat,
             type: type,
             stencilBuffer: false
@@ -108,7 +108,7 @@
                         geometry,
                         new THREE.ShaderMaterial({
                             uniforms : {
-                                pointSize   : { type : "f", value : 3.0 },
+                                pointSize   : { type : "f", value : 4.0 },
                                 px          : px,
                                 pressure    : { type : "t", value : fboPressurePP.getReadBuffer() },
                                 velocity    : { type : "t", value : fboVelocityPP.getWriteBuffer() },
@@ -200,7 +200,8 @@
                 (function loop() {
                     requestAnimationFrame(loop);
 
-                    advect.uniforms.interaction.value = interaction ? 1 : 0;
+                    // advect.uniforms.interaction.value = interaction ? 1 : 0;
+                    advect.uniforms.interaction.value = 1;
 
                     render(advect, fboVelocityPP.getWriteBuffer());
                     render(divergence, fboDivergence);
