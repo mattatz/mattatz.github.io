@@ -1,17 +1,90 @@
 /*
- * index.css 
+ * index.scss 
  */
-
-html, body {
+html, body, * {
   margin: 0;
-  padding: 0; 
-}
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif; }
 
-h2 {
-    margin: 8px 12px;
-}
+header {
+  background-color: #fafafa;
+  height: 45px;
+  overflow: hidden; }
+  header span {
+    line-height: 45px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0px 15px; }
+  header img.social {
+    display: inline-block;
+    vertical-align: middle;
+    width: 23px;
+    height: 23px;
+    margin-left: 5px;
+    margin-bottom: 5px; }
+    header img.social.facebook {
+      margin-left: 0px; }
 
-ul {
-    margin: 4px 16px;
-}
+#background {
+  position: absolute;
+  z-index: -1; }
 
+#container {
+  width: 980px;
+  float: left;
+  position: relative;
+  left: 50%;
+  margin-left: -490px;
+  margin-top: 40px;
+  margin-bottom: 40px; }
+  #container article {
+    margin: 0 20px;
+    float: left;
+    width: 940px; }
+  #container ul.sketches {
+    z-index: 100;
+    list-style-type: none; }
+    #container ul.sketches li.sketch {
+      width: 303px;
+      height: 303px;
+      float: left;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-right: 15px; }
+      #container ul.sketches li.sketch span.title {
+        text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 10px;
+        font-size: 15px; }
+      #container ul.sketches li.sketch p.description {
+        text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        margin-left: 10px;
+        margin-top: 5px;
+        font-size: 12px; }
+
+@media screen and (max-width: 620px) {
+  #container {
+    width: 320px;
+    margin-left: -170px; }
+    #container article {
+      width: 300px; }
+    #container ul.sketches li {
+      margin-right: 0px; } }
+
+@media screen and (max-width: 955px) and (min-width: 621px) {
+  #container {
+    width: 100%;
+    margin-left: -330px; }
+    #container article {
+      width: 621px; }
+    #container ul.sketches li:nth-child(2n) {
+      margin-right: 0px; } }
+
+@media screen and (min-width: 955px) {
+  #container ul.sketches li:nth-child(3n) {
+    margin-right: 0px; } }

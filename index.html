@@ -1,42 +1,44 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
     <head>
-        <meta charset="utf-8" />
-        <link rel="shortcut icon" href="favicon.ico" />
-        <title>mattatz.github.io</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="###">
+        <meta name="keywords" content="###">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0">
+        <meta name="format-detection" content="telephone=no" />
+        <title>> mattatz</title>
+        <link rel="shortcut icon" type="image/ico" href="./favicon.ico">
 
-        <link rel="stylesheet" type="text/css" href="./assets/css/lib/normalize.css" media="all">
-        <link rel="stylesheet" type="text/css" href="./assets/css/index.css" media="all">
-    </head>
-    <body>
-        <div>
-            <h2>WebGL Sketches</h2>
-            <ul>
-                <li><a href="./GPUFluidWireframe" target="_blank">2D Fluid Simulation | Wireframe</a></li>
-                <li><a href="./3DFluidSimulationCube" target="_blank">3D Fluid Simulation | Cube</a></li>
-                <li><a href="./MorphingModels" target="_blank">GPU Particle | Morphing Models</a></li>
-                <li><a href="./MorphingTextures" target="_blank">GPU Particle | Morphing Textures</a></li>
-                <li><a href="./GrayScottModelSphere" target="_blank">Gray Scott Model | Sphere</a></li>
-                <li><a href="./GPUOrbiters" target="_blank">GPU Particle | Orbiters</a></li>
-                <li><a href="./GPGPUGOL" target="_blank">GPU Game of Life</a></li>
-                <li><a href="./GPUHPP" target="_blank">GPU Lattice Gas Automata | HPP</a></li>
-                <li><a href="./GPUFHP" target="_blank">GPU Lattice Gas Automata | FHP 1</a></li>
-                <li><a href="./DispersingTriangles" target="_blank">Dispersing Triangles</a></li>
-                <li><a href="./BuildingTriangles" target="_blank">Building Triangles</a></li>
-                <li><a href="./WorldSpaceEffects" target="_blank">World Space Effects</a></li>
-                <li><a href="./THREE.Watercolor" target="_blank">Watercolor Effects</a></li>
-                <li><a href="./THREE.Cloud" target="_blank">Ray Tracing Based Procedural Volumetric Clouds</a></li>
-                <li><a href="./THREE.Fire" target="_blank">Ray Tracing Based Procedural Volumetric Fire</a></li>
-            </ul>
-        </div>
-        <div>
-            <h2>Unity Sketches</h2>
-            <ul>
-                <li><a href="./unity/procedural-volumetric-fire" target="_blank">Procedural Volumetric Fire</a></li>
-                <li><a href="./unity/generative-tree" target="_blank">Generative Tree</a></li>
-                <li><a href="./unity/lbm-fluid-simulation" target="_blank">Lattice Boltzmann Method (LBM) Fluid Simulation</a></li>
-                <li><a href="./unity/lbm-ink-simulation" target="_blank">Lattice Boltzmann Method (LBM) Ink Simulation</a></li>
-            </ul>
-        </div>
 
-    </body>
-</html>
+
+<script type="text/javascript" src="assets//javascripts/main.js"></script>
+<link rel="stylesheet" href="assets/css/lib/normalize.css" type="text/css">
+<link rel="stylesheet" href="assets/css/index.css" type="text/css">
+
+</head>
+
+<!-- ================================= header ================================= -->
+
+<header id="header" class="">
+    <span>> mattatz</span>
+    <a href="https://github.com/mattatz"><img class="social" src="assets//images/github.png" /></a>
+    <a href="https://twitter.com/mattatz"><img class="social" src="assets//images/twitter.png" /></a>
+    <a href="https://www.facebook.com/masatatsu.nakamura"><img class="social facebook" src="assets//images/facebook.png" /></a>
+</header>
+
+<!-- /header -->
+
+    <div id="background"></div>
+    <div id="container">
+        <article>
+            <ul class="sketches">
+                <li class="sketch" v-for="(index, s) in sketches" v-on:mouseover="onmouseover(this)" v-on:mousemove="onmousemove(this)" v-on:mouseout="onmouseout(this)" v-on:touchstart="onmouseover(this)" v-on:touchmove="onmousemove(this)" v-on:touchend="onmouseout(this)" v-on:click="onclick(this)">
+                    <span class="title">{{s.title}}</span>
+                    <p class="description">{{s.description}}</p>
+                </li>
+            </ul>
+        </article>
+    </div>
+<footer id="footer">
+</footer>
+
