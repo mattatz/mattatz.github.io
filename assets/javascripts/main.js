@@ -1126,12 +1126,13 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*** IMPORTS FROM imports-loader ***/
+	var THREE = __webpack_require__(3);
+
 	/**
 	 * @author Eberhard Graether / http://egraether.com/
 	 * @author Mark Lundin   / http://mark-lundin.com
 	 */
-
-	var THREE = __webpack_require__(3);
 
 	THREE.TrackballControls = function ( object, domElement ) {
 
@@ -1732,6 +1733,7 @@
 
 
 
+
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
@@ -1852,12 +1854,14 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var THREE = __webpack_require__(3);
+
 	/*
 	 * sketch.js
 	 * */
 
-	var THREE = __webpack_require__(3);
-	var $ = __webpack_require__(1);
 	__webpack_require__(8);
 
 	module.exports = Sketch = function() {
@@ -2027,6 +2031,7 @@
 
 
 
+
 /***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
@@ -2162,6 +2167,12 @@
 			"thumbnail": "images/WorldSpaceEffects.png"
 		},
 		{
+			"title": "Generative Tree",
+			"description": "three.js plugin for a generative tree geometry.",
+			"link": "THREE.Tree",
+			"thumbnail": "images/THREE.Tree.png"
+		},
+		{
 			"title": "Ray Tracing Based Procedural Volumetric Fire",
 			"description": "three.js plugin using object space ray tracing.",
 			"link": "THREE.Fire",
@@ -2174,14 +2185,14 @@
 			"thumbnail": "images/THREE.Cloud.png"
 		},
 		{
-			"title": "Watercolor effect",
+			"title": "Watercolor Effect",
 			"description": "three.js plugin for post effect like watercolor.",
 			"link": "THREE.Watercolor",
 			"thumbnail": "images/THREE.Watercolor.png"
 		},
 		{
 			"title": "Drawer | Suibokuga",
-			"description": "A simple suibokuga like drawer.",
+			"description": "A simple drawer like suibokuga.",
 			"link": "Suibokuga",
 			"thumbnail": "images/Suibokuga.png"
 		},
