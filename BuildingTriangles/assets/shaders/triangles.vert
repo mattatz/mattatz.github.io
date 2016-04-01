@@ -11,9 +11,9 @@ uniform float radius;
 
 uniform mat4 invMatrix;
 
-varying float vn;
+// varying float vn;
 varying vec3 vPosition;
-varying vec3 vNormal;
+varying vec3 vViewPosition;
 
 float rnd(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -65,15 +65,17 @@ void main() {
     }
     t = t / hl;
     t = easeInCubic(t);
-    vn = clamp(texture2D(noiseTex, uv + seed).r - t, 0.0, 1.0);
+
+    float vn = clamp(texture2D(noiseTex, uv + seed).r - t, 0.0, 1.0);
 
     float angle = vn * PI * 2.0 * (seed - 0.5);
     pos = rotate(pos, rnd3(vec2(seed, 0.0)), angle);
     pos += normal * vn * radius;
 
-    vPosition = pos;
-    vNormal = normal;
+    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    vViewPosition = - mvPosition.xyz;
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mvPosition;
+    vPosition = gl_Position.xyz;
 }
 

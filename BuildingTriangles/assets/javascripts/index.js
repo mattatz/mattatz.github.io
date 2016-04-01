@@ -41,7 +41,7 @@
             var scene = new THREE.Scene();
 
             var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
-            camera.position.z = 10;
+            camera.position.z = 13;
 
             var renderer = new THREE.WebGLRenderer({
                 alpha: true,
@@ -72,6 +72,10 @@
             geometry.addAttribute('seed', new THREE.BufferAttribute(seeds, 1));
 
             var invMatrix = new THREE.Matrix4();
+            var loader = new THREE.TextureLoader();
+            var noiseTex = loader.load("assets/textures/noise.png");
+            noiseTex.wrapS = noiseTex.wrapT = THREE.RepeatWrapping;
+
             app.getShader("triangles.vert", function(vert) {
                 app.getShader("triangles.frag", function(frag) {
                     mesh = new THREE.Mesh(
@@ -81,13 +85,14 @@
                                 time                : { type : "f", value : 0.0 },
                                 loop                : { type : "f", value : 2.0 },
                                 speed               : { type : "f", value : 0.25 },
-                                noiseTex            : { type : "t", value : THREE.ImageUtils.loadTexture("assets/textures/noise.png") },
+                                noiseTex            : { type : "t", value : noiseTex },
                                 radius              : { type : "f", value : 10.0 },
                                 invMatrix           : { type : "m4", value : invMatrix }
                             },
                             vertexShader : vert,
                             fragmentShader : frag,
-                            transparent : true
+                            transparent : true,
+                            derivatives: true
                         })
                     );
                     container.add(mesh);

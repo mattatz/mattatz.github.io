@@ -1,9 +1,9 @@
 
 uniform mat4 invMatrix;
 
-varying float vn;
+// varying float vn;
 varying vec3 vPosition;
-varying vec3 vNormal;
+varying vec3 vViewPosition;
 
 float easeInCubic (float tt) {
     return tt * tt * tt;
@@ -14,23 +14,25 @@ float easeOutCubic (float tt) {
     return (tt * tt * tt + 1.0);
 }
 
-float lighting (vec3 eyeDir, vec3 lightDir) {
-    vec3 halfLE = normalize(lightDir + eyeDir);
-    float diffuse = clamp(dot(vNormal, lightDir), 0.0, 1.0);
-    float specular = pow(clamp(dot(vNormal, halfLE), 0.0, 1.0), 50.0);
-    return diffuse + specular;
+float specular(vec3 lightDir, vec3 viewDir, vec3 surfNormal, float shininess) {
+    vec3 halfDir = normalize(lightDir + viewDir);
+    return pow(max(0.0, dot(halfDir, surfNormal)), shininess);
 }
 
+const vec3 lightDir0 = vec3(1., 1., 0.);
+
 void main() {
+    vec3 viewDir = normalize(vViewPosition);
 
-    vec3 n = normalize(viewMatrix * vec4(vNormal, 1.0)).xyz;
-    vec3 p = (viewMatrix * vec4(vPosition, 1.0)).xyz;
-    vec3 eyeDir = normalize(-p);
+    vec3 dx = dFdx(vPosition.xyz);
+    vec3 dy = dFdy(vPosition.xyz);
+    vec3 normal = normalize(cross(normalize(dx), normalize(dy)));
 
-    float highlight = 0.0;
-    highlight += lighting(eyeDir, normalize(invMatrix * vec4(vec3(1.0, 1.0, 0.0), 1.0)).xyz);
+    float spec = 0.0;
+    spec += specular(normalize(lightDir0), viewDir, normal, 8.5);
 
-    float alpha = easeInCubic(easeInCubic(1.0 - vn));
-    gl_FragColor = vec4(vec3(highlight + 0.2), alpha);
+    // float alpha = easeInCubic(easeInCubic(1.0 - vn));
+    // gl_FragColor = vec4(vec3(spec + 0.2), alpha);
+    gl_FragColor = vec4(vec3(spec + 0.2), 1.0);
 }
 
