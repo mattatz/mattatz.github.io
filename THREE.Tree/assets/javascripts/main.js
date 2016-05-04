@@ -138,27 +138,31 @@
 	            // app.scene.add(helper);
 
 	            var loader = new THREE.TextureLoader();
-	            var treeMapTexture = loader.load("assets/textures/bark.png");
-	            treeMapTexture.wrapS = treeMapTexture.wrapT = THREE.RepeatWrapping;
-	            treeMapTexture.repeat.set(1, 25.0);
-	            app.treeMapTexture = treeMapTexture;
 
-	            var treeNormalMap = loader.load("assets/textures/bark_normal.png");
-	            treeNormalMap.wrapS = treeNormalMap.wrapT = THREE.RepeatWrapping;
-	            treeNormalMap.repeat.set(1, 25.0);
-	            app.treeNormalMap = treeNormalMap;
+	            loader.load("assets/textures/bark.png", function(treeMapTexture) {
+	                loader.load("assets/textures/bark_normal.png", function(treeNormalMap) {
 
-	            var mesh = new THREE.Mesh(
-	                THREE.TreeGeometry.build(tree),
-	                new THREE.MeshPhongMaterial({
-	                    shininess : 5,
-	                    map : app.treeMapTexture,
-	                    normalMap : app.treeNormalMap
-	                })
-	            );
-	            mesh.castShadow = mesh.receiveShadow = true;
-	            app.scene.add(mesh);
-	            mesh.position.set(0, 0, 0);
+	                    treeMapTexture.wrapS = treeMapTexture.wrapT = THREE.RepeatWrapping;
+	                    treeMapTexture.repeat.set(1, 25.0);
+	                    treeNormalMap.wrapS = treeNormalMap.wrapT = THREE.RepeatWrapping;
+	                    treeNormalMap.repeat.set(1, 25.0);
+
+	                    app.treeMapTexture = treeMapTexture;
+	                    app.treeNormalMap = treeNormalMap;
+
+	                    var mesh = new THREE.Mesh(
+	                        THREE.TreeGeometry.build(tree),
+	                        new THREE.MeshPhongMaterial({
+	                            shininess : 5,
+	                            map : app.treeMapTexture,
+	                            normalMap : app.treeNormalMap
+	                        })
+	                    );
+	                    mesh.castShadow = mesh.receiveShadow = true;
+	                    app.scene.add(mesh);
+	                    mesh.position.set(0, 0, 0);
+	                });
+	            });
 
 	            var light0 = new THREE.DirectionalLight(0xffffff, 1.0);
 	            light0.position.set(20, 30, 20);
@@ -172,8 +176,6 @@
 	            app.scene.add(light0);
 
 	            app.light = light0;
-
-	            // app.scene.add(new THREE.CameraHelper(light0.shadow.camera));
 
 	            var light1 = new THREE.DirectionalLight(0xffffff, 0.5);
 	            light1.position.set(-1, 1, -1);
@@ -207,6 +209,7 @@
 
 	            var click = function(e) {
 	                if(dragged) return;
+	                if(!app.treeMapTexture || !app.treeNormalMap) return;
 
 	                app.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
 	                app.mouse.y = - (e.clientY / window.innerHeight) * 2 + 1;
@@ -232,8 +235,8 @@
 
 	            app.composer.addPass(new THREE.RenderPass(app.scene, app.camera));
 
-	            var bloomPass = new THREE.BloomBlendPass(2.5, 0.5, new THREE.Vector2(window.innerWidth, window.innerHeight));
-	            app.composer.addPass(bloomPass);
+	            var bloomPass = new THREE.BloomBlendPass(2.5, 1.0, new THREE.Vector2(window.innerWidth, window.innerHeight));
+	            // app.composer.addPass(bloomPass);
 
 	            var correctionPass = new THREE.ShaderPass({
 	                uniforms : { 
@@ -2663,39 +2666,39 @@
 	 * @author mattatz / http://mattatz.github.io/
 	 */
 
-	THREE.BloomBlendPass = function (amount, opacity, resolution) {
+	THREE.BloomBlendPass = function ( amount, opacity, resolution ) {
 
-		this.amount = ( amount !== undefined ) ? amount : 1.0;
+	    this.amount = ( amount !== undefined ) ? amount : 1.0;
 	    this.opacity = ( opacity !== undefined ) ? opacity : 1.0;
-		this.resolution = ( resolution !== undefined ) ? resolution : new THREE.Vector2(512, 512);
+	    this.resolution = ( resolution !== undefined ) ? resolution : new THREE.Vector2(512, 512);
 
-		// render targets
+	    // render targets
 
-		var pars = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat };
+	    var pars = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat };
 
-		this.renderTargetX = new THREE.WebGLRenderTarget( this.resolution.x, this.resolution.y, pars );
-		this.renderTargetY = new THREE.WebGLRenderTarget( this.resolution.x, this.resolution.y, pars );
+	    this.renderTargetX = new THREE.WebGLRenderTarget( this.resolution.x, this.resolution.y, pars );
+	    this.renderTargetY = new THREE.WebGLRenderTarget( this.resolution.x, this.resolution.y, pars );
 
 	    var kernel = [
 
-			"varying vec2 vUv;",
+	        "varying vec2 vUv;",
 
-			"void main() {",
+	        "void main() {",
 
-				"vUv = uv;",
-				"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+	        "vUv = uv;",
+	        "gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
 
-			"}"
+	        "}"
 
 	    ].join( "\n" );
 
-		this.blurMaterial = new THREE.ShaderMaterial( {
-			uniforms: {
+	    this.blurMaterial = new THREE.ShaderMaterial( {
+	        uniforms: {
 	            "tDiffuse" : { type : "t", value : null },
 	            "inc" : { type : "v2", value : new THREE.Vector2() }
 	        },
-			vertexShader: kernel,
-			fragmentShader: [
+	        vertexShader: kernel,
+	        fragmentShader: [
 
 	            "uniform sampler2D tDiffuse;",
 
@@ -2705,96 +2708,96 @@
 
 	            "void main() {",
 
-	                "vec4 sum = vec4(0.0);",
+	            "vec4 sum = vec4(0.0);",
 
-	                "sum += texture2D(tDiffuse, (vUv - inc * 4.0)) * 0.051;",
-	                "sum += texture2D(tDiffuse, (vUv - inc * 3.0)) * 0.0918;",
-	                "sum += texture2D(tDiffuse, (vUv - inc * 2.0)) * 0.12245;",
-	                "sum += texture2D(tDiffuse, (vUv - inc * 1.0)) * 0.1531;",
-	                "sum += texture2D(tDiffuse, (vUv + inc * 0.0)) * 0.1633;",
-	                "sum += texture2D(tDiffuse, (vUv + inc * 1.0)) * 0.1531;",
-	                "sum += texture2D(tDiffuse, (vUv + inc * 2.0)) * 0.12245;",
-	                "sum += texture2D(tDiffuse, (vUv + inc * 3.0)) * 0.0918;",
-	                "sum += texture2D(tDiffuse, (vUv + inc * 4.0)) * 0.051;",
+	            "sum += texture2D(tDiffuse, (vUv - inc * 4.0)) * 0.051;",
+	            "sum += texture2D(tDiffuse, (vUv - inc * 3.0)) * 0.0918;",
+	            "sum += texture2D(tDiffuse, (vUv - inc * 2.0)) * 0.12245;",
+	            "sum += texture2D(tDiffuse, (vUv - inc * 1.0)) * 0.1531;",
+	            "sum += texture2D(tDiffuse, (vUv + inc * 0.0)) * 0.1633;",
+	            "sum += texture2D(tDiffuse, (vUv + inc * 1.0)) * 0.1531;",
+	            "sum += texture2D(tDiffuse, (vUv + inc * 2.0)) * 0.12245;",
+	            "sum += texture2D(tDiffuse, (vUv + inc * 3.0)) * 0.0918;",
+	            "sum += texture2D(tDiffuse, (vUv + inc * 4.0)) * 0.051;",
 
-	                "gl_FragColor = sum;",
+	            "gl_FragColor = sum;",
 
 	            "}"
 
 	        ].join( "\n" ),
-		} );
+	    } );
 
-		this.blendMaterial = new THREE.ShaderMaterial( {
+	    this.blendMaterial = new THREE.ShaderMaterial( {
 	        uniforms : {
 	            "tDiffuse" : { type : "t", value : null },
-	            "tInput" : { type : "t", value : null },
+	            "tBlend" : { type : "t", value : null },
 	            "opacity" : { type : "f", value : this.opacity },
 	        },
 	        vertexShader : kernel,
 	        fragmentShader : [
 
 	            "uniform sampler2D tDiffuse;",
-	            "uniform sampler2D tInput;",
+	            "uniform sampler2D tBlend;",
 	            "uniform float opacity;",
 
 	            "varying vec2 vUv;",
 
 	            "void main() {",
 
-	                "vec4 base = texture2D(tDiffuse, vUv);",
-	                "vec4 blend = texture2D(tInput, vUv);",
+	            "vec4 base = texture2D(tDiffuse, vUv);",
+	            "vec4 blend = texture2D(tBlend, vUv);",
 
-	                // screen
-	                "gl_FragColor = (1.0 - ((1.0 - base) * (1.0 - blend)));",
-	                "gl_FragColor = gl_FragColor * opacity + base * ( 1. - opacity );",
+	            // screen
+	            "gl_FragColor = (1.0 - ((1.0 - base) * (1.0 - blend)));",
+	            "gl_FragColor = gl_FragColor * opacity + base * ( 1. - opacity );",
 
 	            "}"
-	            
+
 	        ].join( "\n" )
 	    } );
 
-		this.enabled = true;
-		this.needsSwap = true;
-		this.clear = false;
+	    this.enabled = true;
+	    this.needsSwap = true;
+	    this.clear = false;
 
-		this.camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
-		this.scene  = new THREE.Scene();
+	    this.camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
+	    this.scene  = new THREE.Scene();
 
-		this.quad = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), null );
-		this.scene.add( this.quad );
+	    this.quad = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), null );
+	    this.scene.add( this.quad );
 
 	};
 
 	THREE.BloomBlendPass.prototype = {
 
-		render: function ( renderer, writeBuffer, readBuffer, delta, maskActive ) {
+	    render: function ( renderer, writeBuffer, readBuffer, delta, maskActive ) {
 
-			if ( maskActive ) renderer.context.disable( renderer.context.STENCIL_TEST );
+	        if ( maskActive ) renderer.context.disable( renderer.context.STENCIL_TEST );
 
-			this.quad.material = this.blurMaterial;
+	        this.quad.material = this.blurMaterial;
 
 	        // horizontal blur
-			this.blurMaterial.uniforms[ "tDiffuse" ].value = readBuffer;
+	        this.blurMaterial.uniforms[ "tDiffuse" ].value = readBuffer;
 	        this.blurMaterial.uniforms[ "inc" ].value.set( this.amount / readBuffer.width, 0.0 );
 
-			renderer.render( this.scene, this.camera, this.renderTargetX, false);
+	        renderer.render( this.scene, this.camera, this.renderTargetX, false);
 
 	        // vertical blur
 	        this.blurMaterial.uniforms[ "tDiffuse" ].value = this.renderTargetX;
 	        this.blurMaterial.uniforms[ "inc" ].value.set( 0.0, this.amount / this.renderTargetX.height);
 
-			renderer.render( this.scene, this.camera, this.renderTargetY, false);
+	        renderer.render( this.scene, this.camera, this.renderTargetY, false);
 
 	        // blending original buffer and blurred buffer
 
-			this.quad.material = this.blendMaterial;
-			this.blendMaterial.uniforms[ "tDiffuse" ].value = readBuffer;
-			this.blendMaterial.uniforms[ "tInput" ].value = this.renderTargetY;
+	        this.quad.material = this.blendMaterial;
+	        this.blendMaterial.uniforms[ "tDiffuse" ].value = readBuffer;
+	        this.blendMaterial.uniforms[ "tBlend" ].value = this.renderTargetY;
 
-			if ( maskActive ) renderer.context.enable( renderer.context.STENCIL_TEST );
+	        if ( maskActive ) renderer.context.enable( renderer.context.STENCIL_TEST );
 
-			renderer.render( this.scene, this.camera, writeBuffer, this.clear );
-		}
+	        renderer.render( this.scene, this.camera, writeBuffer, this.clear );
+	    }
 
 	};
 
