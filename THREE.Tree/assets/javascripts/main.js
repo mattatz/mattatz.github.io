@@ -235,8 +235,8 @@
 
 	            app.composer.addPass(new THREE.RenderPass(app.scene, app.camera));
 
-	            var bloomPass = new THREE.BloomBlendPass(2.5, 1.0, new THREE.Vector2(window.innerWidth, window.innerHeight));
-	            // app.composer.addPass(bloomPass);
+	            var bloomPass = new THREE.BloomBlendPass(2.5, 0.5, new THREE.Vector2(window.innerWidth, window.innerHeight));
+	            app.composer.addPass(bloomPass);
 
 	            var correctionPass = new THREE.ShaderPass({
 	                uniforms : { 
