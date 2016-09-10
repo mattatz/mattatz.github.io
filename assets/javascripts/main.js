@@ -2200,7 +2200,7 @@
 			"title": "Teddy",
 			"description": "Teddy for Unity.",
 			"link": "unity/teddy",
-			"thumbnail": "images/unity/teddy.png"
+			"thumbnail": "images/unity/Teddy.png"
 		},
 		{
 			"title": "LBM Fluid Simulation",
