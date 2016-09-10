@@ -2197,6 +2197,12 @@
 			"thumbnail": "images/THREE.Cloud.png"
 		},
 		{
+			"title": "Teddy",
+			"description": "Teddy for Unity.",
+			"link": "unity/teddy",
+			"thumbnail": "images/unity/teddy.png"
+		},
+		{
 			"title": "LBM Fluid Simulation",
 			"description": "Lattice Boltzmann Method (LBM) Fluid Simulation for Unity.",
 			"link": "unity/lbm-fluid-simulation",
